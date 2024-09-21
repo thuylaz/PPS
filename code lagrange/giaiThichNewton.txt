@@ -1,0 +1,36 @@
+Dưới đây là giải thích từng dòng trong đoạn code:
+
+1. `import numpy as np`: Import thư viện NumPy với biệt danh `np`.
+2. `from numpy.polynomial import Polynomial`: Import lớp `Polynomial` từ module `numpy.polynomial`.
+3. `def BTSP(arr_y, arr_x):`: Định nghĩa hàm `BTSP` nhận hai mảng `arr_y` và `arr_x` làm đối số.
+
+   - `result = [arr_y]`: Khởi tạo `result` là một danh sách chứa một phần tử đầu tiên là mảng `arr_y`.
+   - `for i in range(1, len(arr_y)):`: Duyệt qua các phần tử từ 1 đến chiều dài của `arr_y`.
+      - `result.append([])`: Thêm một danh sách trống vào `result`.
+      - `for j in range(len(result[i-1])-1):`: Duyệt qua các phần tử của danh sách cuối cùng trong `result`.
+         - `m = (result[i-1][j+1] - result[i-1][j]) / (arr_x[j+i] - arr_x[j])`: Tính giá trị của đạo hàm chia phần (từ bảng tỷ sai phân).
+         - `result[i].append(m)`: Thêm giá trị `m` vào danh sách mới trong `result`.
+
+   - `return result`: Trả về kết quả sau cùng là một danh sách chứa bảng tỷ sai phân.
+
+4. `def newton_up(arr_y, arr_x):`: Định nghĩa hàm `newton_up` nhận hai mảng `arr_y` và `arr_x` làm đối số.
+
+   - `arr_btsp = BTSP(arr_y, arr_x)`: Gọi hàm `BTSP` để có bảng tỷ sai phân và lưu vào biến `arr_btsp`.
+   - `print("BTSP Newton tiến: ", arr_btsp)`: In bảng tỷ sai phân Newton tiến.
+
+   - `result = [arr_y[0]]`: Khởi tạo `result` là một danh sách chứa phần tử đầu tiên của `arr_y`.
+   - `for i in range(1, len(arr_btsp)):`: Duyệt qua các phần tử từ 1 đến chiều dài của `arr_btsp`.
+      - `f = [arr_btsp[i][0]]`: Khởi tạo `f` là một danh sách chứa phần tử đầu tiên của hàng thứ `i` trong bảng tỷ sai phân.
+      - `for j in range(0, i):`: Duyệt qua các phần tử của `f`.
+         - `f = np.convolve(f, [1, -arr_x[j]])`: Thực hiện phép tích chập giữa `f` và đa thức tuyến tính [1, -arr_x[j]].
+
+      - `result = np.polyadd(result, f)`: Cộng đa thức `f` vào `result`.
+
+   - `result = np.flip(result)`: Đảo ngược thứ tự của các hệ số trong `result`.
+
+   - `return result.tolist()`: Trả về danh sách chứa hệ số của đa thức Newton (sử dụng `tolist()` để chuyển đổi từ mảng NumPy thành danh sách Python).
+
+5. `arr_x = np.array([-1, 0, 1])`: Tạo một mảng NumPy từ danh sách `[-1, 0, 1]`.
+6. `arr_y = np.array([0.5, 1, 2])`: Tạo một mảng NumPy từ danh sách `[0.5, 1, 2]`.
+7. `result = newton_up(arr_y, arr_x)`: Gọi hàm `newton_up` với đối số là `arr_y` và `arr_x`.
+8. `print(f"Đa thức Newton tại x là: {Polynomial(result)}")`: In đa thức Newton tại x.

@@ -1,0 +1,39 @@
+Dưới đây là giải thích từng dòng lệnh trong đoạn code:
+
+1. `import numpy as np`: Nhập thư viện NumPy và đặt tên ngắn gọn là `np` để sử dụng trong code. NumPy là một thư viện Python cho các phép toán trên mảng và ma trận.
+
+2. `from numpy.polynomial import Polynomial`: Nhập lớp `Polynomial` từ mô-đun `numpy.polynomial`. Lớp này được sử dụng để đại diện cho đa thức.
+
+3. `def lagrange_interpolation(x, y):`: Định nghĩa hàm `lagrange_interpolation` nhận vào hai danh sách `x` và `y` là các giá trị từ bảng mốc nội suy.
+
+4. `n = len(x)`: Gán giá trị chiều dài của danh sách `x` (số điểm trong bảng mốc nội suy) cho biến `n`.
+
+5. `l = np.zeros((n, n))`: Tạo một ma trận `l` có kích thước `n x n` chứa toàn bộ giá trị 0. Ma trận này sẽ được sử dụng để lưu trữ các giá trị trung gian trong quá trình tính toán đa thức Lagrange.
+
+6. `lagrange_polynomial = Polynomial([0.0])`: Khởi tạo một đa thức Lagrange với hệ số khởi đầu là 0.
+
+7. `for i in range(n):`: Bắt đầu vòng lặp qua tất cả các điểm trong bảng mốc nội suy.
+
+8. `v = Polynomial([1.0])`: Khởi tạo đa thức `v` với hệ số bắt đầu là 1.0. Đa thức `v` sẽ chứa các thành phần Lagrange.
+
+9. `for j in range(n):`: Bắt đầu vòng lặp qua tất cả các điểm trong bảng mốc nội suy để tính đa thức Lagrange cho điểm thứ `i`.
+
+10. `if i != j:`: Kiểm tra điều kiện để tránh chia cho 0 khi `i` và `j` giống nhau.
+
+11. `poly_x_j = Polynomial([-x[j], 1.0])`: Tạo đa thức với hệ số `-x[j]` và `1.0`. Đa thức này đại diện cho `(x - x[j])` trong công thức Lagrange.
+
+12. `v *= poly_x_j / (x[i] - x[j])`: Nhân đa thức `v` với đa thức `(x - x[j]) / (x[i] - x[j])` để tính toán thành phần Lagrange.
+
+13. `lagrange_polynomial += y[i] * v`: Thêm vào đa thức Lagrange một thành phần mới được tính toán với hệ số `y[i]`.
+
+14. `result_string = str(lagrange_polynomial)`: Chuyển đổi đa thức Lagrange thành chuỗi để in ra màn hình.
+
+15. `print(result_string)`: In đa thức Lagrange ra màn hình.
+
+16. `x_values = [-1, 0, 1, 2]`: Tạo danh sách `x_values` chứa các giá trị x từ bảng mốc nội suy.
+
+17. `y_values = [0.5, 1, 2, 4]`: Tạo danh sách `y_values` chứa các giá trị y tương ứng từ bảng mốc nội suy.
+
+18. `lagrange_interpolation(x_values, y_values)`: Gọi hàm `lagrange_interpolation` với các giá trị x và y đã cho.
+
+19. Kết quả đa thức Lagrange tương ứng với bảng mốc nội suy được in ra màn hình.
